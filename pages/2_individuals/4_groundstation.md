@@ -187,9 +187,9 @@ This modification successfully eliminated the tracking errors and ensured contin
 
 ![][image9]![][image10]
 
-Right now one of the bigger problems we’re dealing with is the wiring around the gimbal. When the GM-12E-3A moves around especially in azimuth or elevation, the cables sometimes get tangled or rub against the sharp edges of the frame. There were a couple of times the wires  even got hooked on parts of the mount which obviously isn’t ideal.
+Right now, one of the major issues we’re facing is the wiring around the gimbal. When the GM-12E-3A moves around especially in azimuth or elevation, the cables sometimes would get tangled or rub against the sharp edges of the frame. There were also instances where the wires  would get hooked on parts of the mount which is not ideal.
+If this issue is not addressed, it could block the motion or mess up with the signal. In the worst case scenario, it might even damage the cables entirely. Currently, we’re looking at different ways to manage the routing efficiently. We are currently exploring several cable-management solutions such as proper cable guides, using flexible cable chains, or even going for a slip-ring setup so the wires don’t twist at all. We just need to ensure that the cables are kept clear while the gimbal moves freely. Once the cable layouts are sorted, the system should be able to run a lot more smoothly and safely during long tracking sessions.
 
-Without any solution to such problems, it could block the motion or mess up the signal. In the worst case it might damage the cables entirely. So we’re looking at different ways to manage the routing better. Things like adding proper cable guides, using flexible cable chains, or even going for a slip-ring setup so the wires don’t twist at all. We just need something that keeps the cables clear while the gimbal moves freely. Once the cable layouts are sorted, the system should run a lot more smoothly and safely during long tracking sessions.
 
 ## **4.8  Future Plans**
 
