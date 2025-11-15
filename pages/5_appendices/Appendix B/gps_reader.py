@@ -1,6 +1,8 @@
 # gps_reader.py — u-blox quickstart (UBX first, NMEA fallback) + delayed heading catch
 # deps: pip install pyserial pyubx2
 
+COM = "COM5"  # <<< CHANGE THIS VALUE HERE >>>
+
 from serial import Serial
 from serial.tools import list_ports
 from datetime import datetime, timezone, timedelta
@@ -44,7 +46,7 @@ def _dm_to_deg(dm: str, hemi: str):
     return -val if hemi in ("S", "W") else val
 
 # ---------- public API ----------
-def read_once(port="COM6", baud=38400, max_wait_s=8.0, want_heading=True, extra_heading_wait_s=2.0):
+def read_once(port=COM, baud=38400, max_wait_s=8.0, want_heading=True, extra_heading_wait_s=2.0):
     """
     Get one fix: returns {time_utc, lat, lon, alt_m, heading_deg, heading_acc_deg, source}.
     - Prefers UBX NAV-PVT; falls back to NMEA (GGA/GLL).
@@ -78,7 +80,6 @@ def read_once(port="COM6", baud=38400, max_wait_s=8.0, want_heading=True, extra_
                         break  # got position; move on to (optional) heading window
 
                 elif want_heading and msg.identity == "NAV-RELPOSNED" and getattr(msg, "relPosValid", 0):
-                    # we might see heading before/without position; stash but keep searching for position
                     rh = getattr(msg, "relPosHeading", None)
                     ah = getattr(msg, "accHeading", None)
                     heading_deg, heading_acc_deg = _auto_heading_deg(rh, ah)
@@ -111,7 +112,6 @@ def read_once(port="COM6", baud=38400, max_wait_s=8.0, want_heading=True, extra_
                         lat = _dm_to_deg(parts[1], parts[2])
                         lon = _dm_to_deg(parts[3], parts[4])
                         hhmmss = parts[5]
-                        time_utc = None
                         if len(hhmmss) >= 6:
                             h = int(hhmmss[0:2]); m = int(hhmmss[2:4]); sec = float(hhmmss[4:])
                             us = int((sec - int(sec)) * 1_000_000)
@@ -141,7 +141,7 @@ def read_once(port="COM6", baud=38400, max_wait_s=8.0, want_heading=True, extra_
             "source": source,
         }
 
-def stream_status(port="COM6", baud=38400, timeout=1.0):
+def stream_status(port=COM, baud=38400, timeout=1.0):
     FIXTYPE_MAP = {0:"No fix",1:"DR only",2:"2D",3:"3D",4:"GNSS+DR",5:"Time only"}
     with Serial(port, baud, timeout=timeout) as s:
         ubr = UBXReader(s, protfilter=1)  # UBX
@@ -182,11 +182,10 @@ if __name__ == "__main__":
     for p in list(list_ports.comports()):
         print(f" - {p.device} | {p.description}")
 
-    PORT = "COM6"
     BAUD = 38400
 
     try:
-        fix = read_once(port=PORT, baud=BAUD, max_wait_s=8, want_heading=True, extra_heading_wait_s=2.0)
+        fix = read_once(port=COM, baud=BAUD, max_wait_s=8, want_heading=True, extra_heading_wait_s=2.0)
         print("\n--- GPS FIX ---")
         print("UTC Time :", fix["time_utc"])
         print(f"Latitude : {fix['lat']:.7f}")
@@ -202,7 +201,7 @@ if __name__ == "__main__":
         print("----------------\n")
 
         # Uncomment to watch in real-time:
-        # stream_status(port=PORT, baud=BAUD, timeout=1.0)
+        # stream_status(port=COM, baud=BAUD, timeout=1.0)
 
     except TimeoutError as e:
         print("[ERROR]", e)

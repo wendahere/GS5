@@ -24,8 +24,6 @@ CLI examples
 
   # Show all future passes (across all files) starting from now
   python pass_scheduler.py --all --local
-
-Compatible with your previous code: functions `select_pass`, `load_passfile`, `convert_datetime` kept (improved robustness).
 """
 
 from __future__ import annotations
@@ -59,18 +57,27 @@ def _ensure_utc_datetime(current_time) -> dt.datetime:
         current_time = current_time.replace(tzinfo=UTC)
     return current_time.astimezone(UTC)
 
-
 def _iso_utc(d: dt.datetime) -> str:
     if d.tzinfo is None:
         d = d.replace(tzinfo=UTC)
     return d.astimezone(UTC).isoformat()
-
 
 def _iso_sgt(d: dt.datetime) -> str:
     if d.tzinfo is None:
         d = d.replace(tzinfo=UTC)
     return d.astimezone(ASIA_SG).isoformat()
 
+def humanize_seconds(total: float) -> str:
+    """Convert duration in seconds → 'Xm Ys' or 'Xh Ym Zs'."""
+    total = int(total)
+    h, rem = divmod(total, 3600)
+    m, s = divmod(rem, 60)
+    if h > 0:
+        return f"{h}h {m}m {s}s"
+    elif m > 0:
+        return f"{m}m {s}s"
+    else:
+        return f"{s}s"
 
 # ----------------------- legacy-compatible API -----------------------
 
@@ -84,29 +91,22 @@ def convert_datetime(str_datetime: str) -> dt.datetime:
       - '2025-10-20T03:10:32' (assumed UTC)
     """
     s = str_datetime.strip()
-    # Drop everything after the timezone if present, but preserve '+00:00' when constructing tz-aware.
-    # Split on comma already done upstream.
-    # Normalize T separator
     s = s.replace('T', ' ')
-    # Remove trailing timezone for parsing, but remember if '+00:00' is present
-    has_tz = ('+00:00' in s) or ('Z' in s)
     s = s.replace('+00:00', '').replace('Z', '')
-    # Some writers include extra microsecond precision (e.g., 6+ digits). Let datetime handle it.
     fmts = [
         '%Y-%m-%d %H:%M:%S.%f',
         '%Y-%m-%d %H:%M:%S',
     ]
+    d = None
     for fmt in fmts:
         try:
             d = dt.datetime.strptime(s, fmt)
             break
         except ValueError:
-            d = None
+            pass
     if d is None:
         raise ValueError(f"Could not parse datetime string: {str_datetime}")
-    d = d.replace(tzinfo=UTC)
-    return d
-
+    return d.replace(tzinfo=UTC)
 
 def load_passfile(pass_file: str | os.PathLike, current_time) -> Optional[Tuple[str, dt.datetime, dt.datetime]]:
     """Return (satname, start_time_utc, end_time_utc) for the first future pass in the file.
@@ -116,21 +116,18 @@ def load_passfile(pass_file: str | os.PathLike, current_time) -> Optional[Tuple[
 
     with open(pass_file, 'r', encoding='utf-8') as f:
         satname = f.readline().strip()  # first line
-        # Iterate line by line to find the first future event
         for line in f:
             if not line.strip():
                 continue
             try:
                 start_s, end_s = [x.strip() for x in line.split(',')]
             except ValueError:
-                # malformed row; skip
                 continue
             start_dt = convert_datetime(start_s)
             end_dt = convert_datetime(end_s)
             if start_dt > now_utc:
                 return satname, start_dt, end_dt
     return None
-
 
 def select_pass(pass_directory: str = "Passes", current_time=None):
     """Scan all .pass files and return the next upcoming event across all satellites.
@@ -166,9 +163,8 @@ def select_pass(pass_directory: str = "Passes", current_time=None):
 
     start, end, sat = best
     duration = (end - start).total_seconds()
-    print(f"Next pass: {sat} at {start.isoformat()} for {int(duration)} seconds")
+    print(f"Next pass: {sat} at {start.isoformat()} for {humanize_seconds(duration)}")
     return start, end, sat, duration
-
 
 # ------------------------------ CLI ------------------------------
 
@@ -200,14 +196,13 @@ def _list_all_future(pass_directory: str, current_time, show_local: bool):
     print("\n=== Upcoming passes ===")
     for sat, s, e in rows:
         dur = int((e - s).total_seconds())
-        line = f"{sat:12s}  {s.isoformat()}  →  {e.isoformat()}  ({dur:4d}s)"
+        line = f"{sat:12s}  {s.isoformat()}  →  {e.isoformat()}  ({humanize_seconds(dur)})"
         if show_local:
             line += f"  |  SGT: {_iso_sgt(s)} → {_iso_sgt(e)}"
         print(line)
     if rows:
         sat, s, e = rows[0]
         print("\nNEXT_PASS,{},{},{},{}".format(sat, _iso_utc(s), _iso_utc(e), int((e - s).total_seconds())))
-
 
 def main():
     ap = argparse.ArgumentParser(description="Select the next satellite pass from legacy .pass files.")
@@ -221,7 +216,6 @@ def main():
 
     # Determine current time
     if args.now:
-        # Parse ISO input as UTC
         t = args.now.replace('T', ' ')
         fmts = ['%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M']
         parsed = None
@@ -251,7 +245,7 @@ def main():
     print(f"Satellite : {sat}")
     print(f"Start UTC : {start.isoformat()}")
     print(f"End   UTC : {end.isoformat()}")
-    print(f"Duration  : {int(dur)} s")
+    print(f"Duration  : {humanize_seconds(dur)}")
     if args.local:
         print(f"Start SGT : {_iso_sgt(start)}")
         print(f"End   SGT : {_iso_sgt(end)}")
@@ -259,7 +253,6 @@ def main():
     # Machine-readable for scripts
     print(f"NEXT_PASS,{sat},{_iso_utc(start)},{_iso_utc(end)},{int(dur)}")
     return 0
-
 
 if __name__ == '__main__':
     raise SystemExit(main())
