@@ -1,5 +1,5 @@
 ---
-title: "Appendix D: **Link budget calculation methodology and Rain Fade Estimation"
+title: "Appendix D: Link budget calculation"
 parent: Appendices
 nav_order: 4
 permalink: /budget/

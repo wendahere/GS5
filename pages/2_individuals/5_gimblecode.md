@@ -204,11 +204,11 @@ Implemented in `live_with_gps.py` via `pchip_slopes()` and `hermite_eval()` (Ann
 
 ### **4.8 Key Implementation Lines (for Cross-Reference)**
 
-**Purpose.** This subsection identifies the specific lines of code that implement each critical function used by the gimbal control software. Full source is provided in Annex B with line numbers; references use (Annex B.A.i, Lstart–Lend).
+**Purpose.** This subsection identifies the specific lines of code that implement each critical function used by the gimbal control software. Full source is provided in Appendix F to K with line numbers; references use (Appendix F, Lstart–Lend).
 
 #### **A. gclib.py \- Galil Motor Controller Interface**
 
-* Open/Close controller: `GOpen`, `GClose` → (Annex B.A.1, L151–158; L161–168)
+* Open/Close controller: `GOpen`, `GClose` → (Appendix F, L151–158; L161–168)
 
 * Send commands: `GCommand` → (L171–180)
 
@@ -216,7 +216,7 @@ Implemented in `live_with_gps.py` via `pchip_slopes()` and `hermite_eval()` (Ann
 
 * Assignments: `GAssign` → (L263–271)
 
-* Transfers: `GProgramDownload`, `GArrayDownload` → (L293–302; L334–346)
+* Transfers: `GProgramDownload`, `GArrayDownload` → (Appendix F,L293–302; L334–346)
 
 * Wait for motion: `GMotionComplete` → (L435–442)
 
@@ -224,49 +224,49 @@ Implemented in `live_with_gps.py` via `pchip_slopes()` and `hermite_eval()` (Ann
 
 #### **B. gimbal\_lib.py \- High-Level Motion Control (imports gclib.py)**
 
-* PT mode: `_enter_pt`, `_exit_pt` → (L163–172; L174–181)
+* PT mode: `_enter_pt`, `_exit_pt` → (Appendix G,L163–172; L174–181)
 
-* Wait/settle: `_wait_inpos`, `_wait_settle_counts` → (L263–293)
+* Wait/settle: `_wait_inpos`, `_wait_settle_counts` → (Appendix G,L263–293)
 
-* Motions: `move_absolute`, `move_relative` → (L355–406)
+* Motions: `move_absolute`, `move_relative` → (Appendix G,L355–406)
 
-* Real-time steer: `degSteer` → (L408–456)
+* Real-time steer: `degSteer` → (Appendix G,L408–456)
 
-* Limits/scaling: constants → (L29–43)
+* Limits/scaling: constants → (Appendix G,L29–43)
 
 #### **C. live\_with\_gps.py \- Real-Time Tracking Loop**
 
-* PCHIP math: `pchip_slopes`, `hermite_eval` → (L94–127)
+* PCHIP math: `pchip_slopes`, `hermite_eval` → (Appendix H,L94–127)
 
-* Flip thresholds: `FLIP_ON_DEG`, `FLIP_OFF_DEG` → (L56–57)
+* Flip thresholds: `FLIP_ON_DEG`, `FLIP_OFF_DEG` → (Appendix H,L56–57)
 
-* Flip logic: `decide_flip_with_hysteresis`, `map_to_gimbal_frame_with_state` → (L129–156)
+* Flip logic: `decide_flip_with_hysteresis`, `map_to_gimbal_frame_with_state` → (Appendix H,L129–156)
 
-* Main execution: `main` → (L161–255)
+* Main execution: `main` → (Appendix H,L161–255)
 
-* Command stream: `gimbal.degSteer(...)` → (L245)
+* Command stream: `gimbal.degSteer(...)` → (Appendix H,L245)
 
 #### **D. pass\_scheduler.py \- Next-Pass Selection**
 
-* Datetime conversion: `_ensure_utc_datetime`, `convert_datetime` → (L49–109)
+* Datetime conversion: `_ensure_utc_datetime`, `convert_datetime` → (Appendix I,L49–109)
 
-* Future pass selection: `select_pass` → (L132–167)
+* Future pass selection: `select_pass` → (Appendix I,L132–167)
 
-* Machine output: `NEXT_PASS,...` → (L205; L254)
+* Machine output: `NEXT_PASS,...` → (Appendix I,L205; L254)
 
 #### **E. TLE\_Parser\_Test.py \- Pose Preview & .pass Generation**
 
-* Pass list: `generate_pass_list` → (L52–89)
+* Pass list: `generate_pass_list` → (Appendix K,L52–89)
 
-* Main function: `main` → (L117–154)
+* Main function: `main` → (Appendix K,L117–154)
 
 #### **F. TLE\_Set\_Builder.py \- Daily TLE Fetch** 
 
-* **CelesTrak source & writeout:** `TLE_URL`, `requests.get(...)`, save file → **(Annex B.F, L12; L23; L27–35)**
+* **CelesTrak source & writeout:** `TLE_URL`, `requests.get(...)`, save file → **(Appendix J, L12; L23; L27–35)**
 
 ### **4.8 Annex Reference**
 
-The complete Python source code listings for the gimbal control system are provided in **Annex B – Gimbal Control Software Listings**, including inline documentation and comments for:
+The complete Python source code listings for the gimbal control system are also provided in **Folder – Gimbal Control Software Listings**, including inline documentation and comments for:
 
 * `gclib.py`
 
