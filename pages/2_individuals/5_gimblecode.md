@@ -6,13 +6,6 @@ permalink: /gimble/
 ---
 
 
-<div style="display:flex">
-  <div style="margin-left: 20px">
-    <h2>Gimbal Control System (Software) </h2>
-  </div>
-</div>
-
-
 # **5\. Gimbal Control System (Software)**
 
 ### **5.1 Scope of Project**
