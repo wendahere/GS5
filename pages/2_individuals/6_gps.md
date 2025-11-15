@@ -44,8 +44,7 @@ The selected GPS module meets the above specifications, providing dual-frequency
 ## **5.3 Code Required**
 
 The GPS data acquisition and validation were implemented in Python.  
-The serial port verification script (`check_ports.py`) and the GPS parsing and heading computation module (`gps_reader.py`) are provided in Folder - Gimbal Control Software Listings  for reference.
-[Gimbal Control Software Folder](https://github.com/wendahere/GS5/tree/main/pages/5_appendices/Appendix%20B) - <h>(This will bring you to a github folder containing all the code)</h>
+The serial port verification script (`check_ports.py`) and the GPS parsing and heading computation module (`gps_reader.py`) are provided in Appendix B for reference.
 
 A. `check_ports.py` \- Serial Port Discovery   
 Purpose:
