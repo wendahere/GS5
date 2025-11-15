@@ -14,7 +14,7 @@ Written By: Tristan Voon
 
 ## **Subsystem Requirements and Specifications**
 
-Key subsystem requirements are cascaded down from the overall mission concept and mission level requirements. The full list of radio subsystem requirements are shown in Appendix A.
+Key subsystem requirements are cascaded down from the overall mission concept and mission level requirements. The full list of radio subsystem requirements are shown in Appendix C.
 
 In general, the main subsystem requirements for the radio can be summarised into a few main themes:
 
