@@ -267,6 +267,7 @@ Implemented in `live_with_gps.py` via `pchip_slopes()` and `hermite_eval()` (Ann
 ### **4.8 Annex Reference**
 
 The complete Python source code listings for the gimbal control system are also provided in **Folder – Gimbal Control Software Listings**, including inline documentation and comments for:
+[Gimbal Control Software Folder](https://github.com/wendahere/GS5/tree/main/pages/5_appendices/Gimbal%20Code%20Listing) - <h>(This will bring you to a github folder containing all the code)</h>
 
 * `gclib.py`
 
