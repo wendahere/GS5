@@ -28,7 +28,7 @@ Written By: Tristan Voon
 
 The primary purpose of the Ku band upconverter is to convert the incoming intermediate frequency (IF) from the Link S/X radio into the appropriate Ku Band Frequency, and boost it to a power level suitable for transmission.
 
-The upconversion process happens primarily in a mixer which mixes the IF with a second Signal, termed the Local Oscillator (LO) signal. Mathematically, this process occurs as a multiplication between IF and LO signals, which produces two frequencies at f(LO) \+ f(IF) and |f(LO) \- f(IF)|. In an upconversion process, the former is the desired signal, which can then be amplified to create the desired signal to be transmitted. 
+The upconversion process happens primarily in a mixer which mixes the IF with a second Signal, termed the Local Oscillator (LO) signal. Mathematically, this process occurs as a multiplication between IF and LO signals, which produces two frequencies at f(LO) \+ f(IF) and \|f(LO) \- f(IF)\|. In an upconversion process, the former is the desired signal, which can then be amplified to create the desired signal to be transmitted. 
 
 In real world mixers, the isolation between the IF/LO ports and the output Radio Frequency (RF Port) is not perfect, and there will be some leakage of the LO signal expected through to the RF side. Along with LO leakage, some harmonics are generated due to the non linearity of the mixer. In general, these should be filtered out through the use of a bandpass filter to prevent wastage of amplifier power and the transmission of spurious signals.
 
