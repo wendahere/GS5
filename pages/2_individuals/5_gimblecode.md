@@ -5,7 +5,6 @@ nav_order: 5
 permalink: /gimble/
 ---
 
-
 # **5\. Gimbal Control System (Software)**
 
 ### **5.1 Scope of Project**

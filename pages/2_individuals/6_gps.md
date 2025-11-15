@@ -6,12 +6,6 @@ permalink: /GPS/
 ---
 
 
-<div style="display:flex">
-  <div style="margin-left: 20px">
-    <h2>Global Positioning System </h2>
-  </div>
-</div>
-
 
 # **6\. Global Positioning System** 
 
