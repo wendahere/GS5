@@ -6,7 +6,6 @@ permalink: /Ground_Station/
 ---
 
 <div style="display:flex">
-  <img src="{{site.baseurl}}/assets/images/profiles/tzeyee.jpg" alt="Lim Tze Yee" width="200" style="border-radius:50%">
   <div style="margin-left: 20px">
     <h2>Ground Station</h2>
   </div>
