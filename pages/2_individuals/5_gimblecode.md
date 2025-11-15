@@ -1,7 +1,7 @@
 ---
 title: Gimbal Control System (Software)
 parent: Work Area
-nav_order: 4
+nav_order: 5
 permalink: /gimble/
 ---
 
@@ -13,9 +13,9 @@ permalink: /gimble/
 </div>
 
 
-# **4\. Gimbal Control System (Software)**
+# **5\. Gimbal Control System (Software)**
 
-### **4.1 Scope of Project**
+### **5.1 Scope of Project**
 
 The gimbal control system forms the software backbone of the satellite ground station, enabling automated and precise tracking of satellites in real time.  
 It integrates Two-Line Element (TLE) from orbital data, GPS positional feedback to communicate with the gimbal motor controller to continuously align the satellite dish with the target satellite’s position throughout its visible pass window.
@@ -23,7 +23,7 @@ It integrates Two-Line Element (TLE) from orbital data, GPS positional feedback 
 The software framework was designed to be modular and scalable, ensuring ease of maintenance and adaptability for future improvements. Each module handles a specific process, such as orbital prediction, GPS integration, or real-time motion control.  
 This chapter details the system’s current implementation, its operational workflow, and ongoing challenges in achieving sub-degree accuracy and motion smoothness.
 
-### **4.1.1 Problem Statement**
+### **5.1.1 Problem Statement**
 
 Commercial ground-station systems do not support our required downlink frequency of 13.95 GHz, making them unsuitable for the specific communication needs of this project.  
 There is also little to no open-sourced system available on the market that could integrate TLE-based orbital prediction, GPS feedback, and motion control into one ground station that met all of our requirements.
@@ -33,7 +33,7 @@ This required the development of a custom interface library in Python through tr
 
 The project therefore required us to build a fully custom gimbal control software, capable of real-time satellite tracking with live GPS and TLE data integration, while being cost-effective and ensuring a robust system to fulfill all of the specification requirements.
 
-### **4.1.2 Objective**
+### **5.1.2 Objective**
 
 The objective of the gimbal control system software is to achieve real-time, autonomous satellite tracking with smooth and stable motion, guided by accurate positional and heading feedback.
 
@@ -48,7 +48,7 @@ The system integrates:
 By combining these data sources, the software maintains continuous satellite alignment during passes.  
 Although the current system achieves high reliability, further improvement is required to reach the targeted GPS heading accuracy of \< 0.2°.
 
-### **4.1.3 Current Progress**
+### **5.1.3 Current Progress**
 
 At the current stage, the software has achieved full integration across all functional modules:
 
@@ -64,7 +64,7 @@ The gimbal successfully follows satellite trajectories and responds dynamically 
 However, measured GPS heading accuracy remains above 0.2°, affecting overall pointing precision.  
 In addition, motion smoothness can be improved by optimizing interpolation step resolution and timing intervals.
 
-### **4.2 Design Requirements**
+### **5.2 Design Requirements**
 
 | Parameter | Requirement | Description |
 | ----- | ----- | ----- |
@@ -76,7 +76,7 @@ In addition, motion smoothness can be improved by optimizing interpolation step 
 | **Communication Interface** | Serial / TCP (Galil gclib) | For command exchange with the motor controller. |
 | **Software Modularity** | High | Independent modules for GPS, TLE, scheduling, and motion. |
 
-### **4.3 System Architecture**
+### **5.3 System Architecture**
 
 The gimbal software is composed of **seven Python modules**, each handling a specific subsystem.
 
@@ -90,14 +90,14 @@ The gimbal software is composed of **seven Python modules**, each handling a spe
 | **6** | `gps_reader.py` | Reads GPS coordinates and heading data, providing live positional feedback. |
 | **7** | `live_with_gps.py` | Main execution script that integrates all modules for real-time satellite tracking. |
 
-### **4.4 Detailed Software Design**
+### **5.4 Detailed Software Design**
 
-#### 4.4.1 gclib.py: Galil Motor Controller Interface
+#### 5.4.1 gclib.py: Galil Motor Controller Interface
 
 Acts as the foundation for motion control, defining communication between Python and the Galil hardware library.  
  Implements command execution, connection handling, and motion-completion feedback.
 
-#### 4.4.2 gimbal\_lib.py: High-Level Motion Control
+#### 5.4.2 gimbal\_lib.py: High-Level Motion Control
 
 Imports `gclib.py` and adds advanced control features such as:
 
@@ -108,49 +108,49 @@ Imports `gclib.py` and adds advanced control features such as:
 * `degSteer()` for continuous steering under Position Tracking mode  
    This ensures easy, stable and precise motion during live satellite passes.
 
-#### 4.4.3 TLE\_Set\_Builder.py: Orbital Data Retrieval
+#### 5.4.3 TLE\_Set\_Builder.py: Orbital Data Retrieval
 
 Fetches up-to-date TLE data daily from CelesTrak and stores them locally for the parser and scheduler.
 
-#### 4.4.4 TLE\_Parser\_Test.py:Orbital Data Processing
+#### 5.4.4 TLE\_Parser\_Test.py:Orbital Data Processing
 
 Processes TLE data using Skyfield to calculate azimuth and elevation, implements flip logic near ± 90°, and generates `.pass` files.
 
-#### 4.4.5 pass\_scheduler.py: Pass Scheduling
+#### 5.4.5 pass\_scheduler.py: Pass Scheduling
 
 Reads `.pass` files, determines the next visible satellite pass, and provides both UTC and local times for tracking operations.
 
-#### 4.4.6 gps\_reader.py: GPS Data Acquisition
+#### 5.4.6 gps\_reader.py: GPS Data Acquisition
 
 Reads live data from the GPS module, extracting latitude, longitude, altitude, and heading.  
  Currently, heading accuracy exceeds 0.2°, requiring further refinement.
 
-#### 4.4.7 live\_with\_gps.py: Integration of all components above to track target satellite live
+#### 5.4.7 live\_with\_gps.py: Integration of all components above to track target satellite live
 
 Integrates TLE and GPS inputs, computes real-time AZ/EL, and uses PCHIP interpolation for smooth motion.  
 Streams continuous position updates to the gimbal controller.
 
-### 4.5 Interpolation in Gimbal Motion Control
+### 5.5 Interpolation in Gimbal Motion Control
 
   ![A paper with text and a graphAI-generated content may be incorrect.][image1]
 
-#### 4.5.1 Purpose of Interpolation
+#### 5.5.1 Purpose of Interpolation
 
 In the gimbal tracking system, the controller receives discrete position updates at fixed time intervals from orbital data.  
 Interpolation is required to estimate intermediate pointing angles between consecutive data points.  
 Without interpolation, the gimbal would move in abrupt steps, producing jerky motion, higher mechanical wear, and degraded stability.  
 Interpolation ensures that motor commands are smooth, continuous, and dynamically feasible.
 
-#### 4.5.2 Linear Interpolation
+#### 5.5.2 Linear Interpolation
 
 Connects consecutive data points with straight lines-simple and efficient but assumes constant angular velocity, causing sudden acceleration changes and vibration.  
 Adequate only for coarse control, not for precision tracking.
 
-#### 4.5.3 Quadratic Interpolation
+#### 5.5.3 Quadratic Interpolation
 
 Quadratic Interpolation uses second-order polynomials, introducing curvature for smoother velocity transitions. However, this method lacks acceleration continuity and is prone to overshoot which may lead to physical crashes and hitting limits set.
 
-#### 4.5.4 PCHIP (Piecewise Cubic Hermite Interpolating Polynomial)
+#### 5.5.4 PCHIP (Piecewise Cubic Hermite Interpolating Polynomial)
 
 PCHIP fits a monotonic cubic polynomial between data points, preserving both value and slope continuity.  
 Unlike natural cubic splines, it enforces monotonicity through the Fritsch–Carlson slope limiter to prevent overshoot.  
@@ -162,20 +162,20 @@ Unlike natural cubic splines, it enforces monotonicity through the Fritsch–Car
 
 * Real-time numerical stability for control use
 
-#### 4.5.5 Justification for Choosing PCHIP
+#### 5.5.5 Justification for Choosing PCHIP
 
 Initially, we started off with linear interpolation, the movement of the gimbal was very choppy and steps were very large. Defence Science Organisation (DSO) also had the issue of movement being very choppy. Afterwards, we upgraded to quadratic interpolation, however, we kept exceeding the mechanical and soft limits in the code and we kept experiencing crashes. After consulting experts and doing further research, we learned about PCHIP interpolation and implemented it for testing. This worked flawlessly. 
 
 The gimbal requires smooth, non-oscillatory motion with predictable velocity control.  
 PCHIP provides the best balance of computational simplicity, smoothness, and stability compared with linear or quadratic interpolation, making it ideal for real-time gimbal motion.
 
-#### 4.5.6 Implementation in Code
+#### 5.5.6 Implementation in Code
 
 Implemented in `live_with_gps.py` via `pchip_slopes()` and `hermite_eval()` (Annex B.A.7, L94-127).  
  These compute cubic Hermite slopes and evaluate interpolated angles between consecutive TLE-derived positions.  
  Interpolated azimuth/elevation values are then streamed to the controller through `degSteer()` in `gimbal_lib.py`.
 
-### **4.6 Current Challenges**
+### **5.6 Current Challenges**
 
 | Challenge | Description | Key Impact |
 | ----- | ----- | ----- |
@@ -184,9 +184,9 @@ Implemented in `live_with_gps.py` via `pchip_slopes()` and `hermite_eval()` (Ann
 | **Spoilt Ethernet Port** | Physical Ethernet port on controller is damaged. | Causes unstable connection to the gimbal. |
 | **Cable Management** | Motor-cable routing needs improvement. | Risk of entanglement during multi-axis motion. |
 
-### **4.7 Future Work**
+### **5.7 Future Work**
 
-#### **4.6.1 Software Improvements**
+#### **5.6.1 Software Improvements**
 
 * Refine interpolation step size and timing.
 
@@ -194,7 +194,7 @@ Implemented in `live_with_gps.py` via `pchip_slopes()` and `hermite_eval()` (Ann
 
 * Integrate feedback-based GPS-heading error correction.
 
-#### **4.7.2 Hardware Integration**
+#### **5.7.2 Hardware Integration**
 
 1. Hardware Integration: Achieve end-to-end connectivity across ground-station components (dish, feedhorn, LNB, GPS).
 
@@ -202,7 +202,7 @@ Implemented in `live_with_gps.py` via `pchip_slopes()` and `hermite_eval()` (Ann
 
 3. Space Segment Radio Payload Integration: Perform thermal and mechanical compatibility testing of the radio payload with the satellite bus.
 
-### **4.8 Key Implementation Lines (for Cross-Reference)**
+### **5.8 Key Implementation Lines (for Cross-Reference)**
 
 **Purpose.** This subsection identifies the specific lines of code that implement each critical function used by the gimbal control software. Full source is provided in Appendix F to K with line numbers; references use (Appendix F, Lstart–Lend).
 
