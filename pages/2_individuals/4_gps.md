@@ -7,7 +7,6 @@ permalink: /GPS/
 
 
 <div style="display:flex">
-  <img src="{{site.baseurl}}/assets/images/profiles/jg.jpg" alt="Hang Jin Guang" width="200" style="border-radius:50%">
   <div style="margin-left: 20px">
     <h2>Global Positioning System </h2>
   </div>
