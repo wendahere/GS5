@@ -13,15 +13,15 @@ permalink: /GPS/
 </div>
 
 
-# **3\. Global Positioning System** 
+# **5\. Global Positioning System** 
 
-## **3.1 Objective**
+## **5.1 Objective**
 
 The Global Positioning System (GPS) module within the ground station is essential to provide accurate real-time position and heading information before we can begin satellite tracking operations. We need to know the exact location of the ground station and where it is facing as we must establish a ground position relative to the satellite that we are tracking. This step is required as the ground station is portable and the location of it will vary.
 
 The objective of this global positioning system is to implement and calibrate a GPS-based positioning subsystem that interfaces and works with the gimbal control software. This integration ensures that the ground station can maintain consistent tracking accuracy, making the entire system work even when deployed in different locations.
 
-## **3.2 Design Specifications** 
+## **5.2 Design Specifications** 
 
 The Global Positioning System (GPS) module shall fulfil the following design requirements to ensure accurate and reliable position and heading determination for satellite tracking operations:
 
@@ -41,7 +41,7 @@ The Global Positioning System (GPS) module shall fulfil the following design req
 
 The selected GPS module meets the above specifications, providing dual-frequency L1/L2 capability for improved heading precision and resistance to multipath errors. These specifications collectively ensure stable and accurate satellite tracking performance in mobile ground station configurations.
 
-## **3.3 Code Required**
+## **5.3 Code Required**
 
 The GPS data acquisition and validation were implemented in Python.  
 The serial port verification script (`check_ports.py`) and the GPS parsing and heading computation module (`gps_reader.py`) are provided in Annex C for reference.
