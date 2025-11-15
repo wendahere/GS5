@@ -1,12 +1,12 @@
 ---
-title: "Appendix B.C"
+title: "Appendix H - live_with_gps.py"
 parent: Appendices
-nav_order: 2
+nav_order: 8
 permalink: /appendix-bc/
 
 ---
 
-## Appendix B.C - live_with_gps.py - Real-Time Tracking Loop
+## Appendix H - live_with_gps.py - Real-Time Tracking Loop
 
 ```
 #!/usr/bin/env python3

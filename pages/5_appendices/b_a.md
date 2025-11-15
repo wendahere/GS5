@@ -1,12 +1,12 @@
 ---
-title: "Appendix B.A"
+title: "Appendix F - gclib.py"
 parent: Appendices
-nav_order: 2
+nav_order: 6
 permalink: /appendix-ba/
 
 ---
 
-## Appendix B.A - gclib.py - Galil Motor Controller Interface
+## Appendix F - gclib.py - Galil Motor Controller Interface
 
 ```
 import platform #for distinguishing 'Windows', 'Linux', 'Darwin'

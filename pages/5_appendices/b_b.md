@@ -1,12 +1,12 @@
 ---
-title: "Appendix B.B"
+title: "Appendix G - gimbal_lib.py"
 parent: Appendices
-nav_order: 2
+nav_order: 7
 permalink: /appendix-b/
 
 ---
 
-## Appendix B.B - gimbal_lib.py - High-Level Motion Control (imports gclib.py)
+## Appendix G - gimbal_lib.py - High-Level Motion Control (imports gclib.py)
 
 ```
 # -*- coding: utf-8 -*-

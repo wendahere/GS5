@@ -1,7 +1,7 @@
 ---
 title: "Appendix E: Data Transfer Calculations"
 parent: Appendices
-nav_order: 1
+nav_order: 5
 permalink: /datatrans/
 
 ---
