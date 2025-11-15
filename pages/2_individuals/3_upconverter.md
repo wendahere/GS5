@@ -16,13 +16,13 @@ Written By: Tristan Voon
 
 
 
-[<img src="Assets/images/upconverter.png">](https://github.com/wendahere/GS5/blob/main/Assets/images/upconverter.png),
+[//]: ##[<img src="Assets/images/upconverter.png">](https://github.com/wendahere/GS5/blob/main/Assets/images/upconverter.png),
 
 
 
-<a href="https://github.com/wendahere/GS5/blob/main/Assets/images/upconverter.png"><img src="Assets/images/upconverter.png"></img></a>
+[//]: #<a href="https://github.com/wendahere/GS5/blob/main/Assets/images/upconverter.png"><img src="Assets/images/upconverter.png"></img></a>
 
-
+![Alt text of the image](https://github.com/wendahere/GS5/blob/main/Assets/images/upconverter.png)
 
 The primary purpose of the Ku band upconverter is to convert the incoming intermediate frequency (IF) from the Link S/X radio into the appropriate Ku Band Frequency, and boost it to a power level suitable for transmission.
 
