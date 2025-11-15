@@ -262,7 +262,7 @@ Implemented in `live_with_gps.py` via `pchip_slopes()` and `hermite_eval()` (Ann
 
 #### **F. TLE\_Set\_Builder.py \- Daily TLE Fetch** 
 
-* **CelesTrak source & writeout:** `TLE_URL`, `requests.get(...)`, save file → **(Annex B.A.3, L12; L23; L27–35)**
+* **CelesTrak source & writeout:** `TLE_URL`, `requests.get(...)`, save file → **(Annex B.F, L12; L23; L27–35)**
 
 ### **4.8 Annex Reference**
 
