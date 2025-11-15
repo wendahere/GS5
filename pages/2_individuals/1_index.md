@@ -2,7 +2,7 @@
 title: Work Area
 nav_order: 2
 permalink: /WorkArea/
-has_toc: false
+#has_toc: false
 ---
 
 <h1>Work Area</h1>
