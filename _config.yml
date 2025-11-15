@@ -2,8 +2,8 @@ title: ASI-407 Interim Report
 description: This is the Interim Report for the ASI-407 Galassia-5 Ground Station Subteam for CDE4301 (2026).
 theme: just-the-docs
 baseurl: "/cde4301-interim-report"
-url: "https://asi408-2026.github.io"
-repository: asi408-2026/interim-draft-1
+url: "https://github.com/wendahere/GS5"
+repository: wendahere/GS5
 
 color_scheme: light
 
@@ -21,7 +21,7 @@ defaults:
 # Aux links for the upper right navigation
 aux_links:
   "GitHub Repo":
-    - "//github.com/asi408-2026"
+    - "//github.com/wendahere/GS5"
     
 
 # Makes Aux links open in a new tab. Default is false
