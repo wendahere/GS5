@@ -86,7 +86,9 @@ A detailed mission CONOPS is available in Appendix B. In the current implementat
 
 ### **1.7 Payload System Architecture**
 
-![][image4]
+
+
+[Payload]: {{site.baseurl}}/Assets/images/payload.png
 
 The payload is the portion of the satellite which performs the sensing, AI acceleration, and data transmission functions. This is the core area that the NUS team focuses on building. The key components of the payloads are:
 
