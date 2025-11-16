@@ -86,9 +86,6 @@ A detailed mission CONOPS is available in Appendix B. In the current implementat
 
 ### **1.7 Payload System Architecture**
 
-<img width="956" height="451" alt="Image" src="https://github.com/user-attachments/assets/fd564447-f7a7-4139-a983-c57820fd103b" />
-
-![Payload]: {{site.baseurl}}/Assets/images/payload.png
 
 ![Diagram of Payload](Assets/images/payload.png "Payload diagram")
 
